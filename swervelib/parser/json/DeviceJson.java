@@ -114,6 +114,16 @@ public class DeviceJson
         return new ADXRS450Swerve();
       case "analog":
         return new AnalogGyroSwerve(id);
+      case "bno055_mxp_i2c":
+        return new BNO055Swerve(I2C.Port.kMXP);
+      case "bno055_i2c":
+        DriverStation.reportWarning(
+            "WARNING: There exists an I2C lockup issue on the roboRIO that could occur, more information here: " +
+            "\nhttps://docs.wpilib.org/en/stable/docs/yearly-overview/known-issues" +
+            ".html#onboard-i2c-causing-system-lockups",
+            false);
+        i2cLockupWarning.set(true);
+        return new BNO055Swerve(I2C.Port.kOnboard);
       case "navx":
       case "navx_spi":
         return new NavXSwerve(SPI.Port.kMXP);
